@@ -1,0 +1,19 @@
+domain: philips.com
+layout:
+- go.kubebuilder.io/v3
+plugins:
+  manifests.sdk.operatorframework.io/v2: {}
+  scorecard.sdk.operatorframework.io/v2: {}
+projectName: http-echo-operator
+repo: github.com/philips-labs/k8s-software-concepts-day/advanced/http-echo-operator
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: philips.com
+  group: http
+  kind: HttpEcho
+  path: github.com/philips-labs/k8s-software-concepts-day/advanced/http-echo-operator/api/v1alpha1
+  version: v1alpha1
+version: "3"

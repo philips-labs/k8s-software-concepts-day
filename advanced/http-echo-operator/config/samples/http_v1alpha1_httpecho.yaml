@@ -1,0 +1,6 @@
+apiVersion: http.philips.com/v1alpha1
+kind: HttpEcho
+metadata:
+  name: httpecho-sample
+spec:
+  # TODO(user): Add fields here

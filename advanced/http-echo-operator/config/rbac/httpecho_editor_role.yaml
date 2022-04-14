@@ -1,0 +1,24 @@
+# permissions for end users to edit httpechoes.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: httpecho-editor-role
+rules:
+- apiGroups:
+  - http.philips.com
+  resources:
+  - httpechoes
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - http.philips.com
+  resources:
+  - httpechoes/status
+  verbs:
+  - get
