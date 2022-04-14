@@ -16,5 +16,13 @@ spec:
         app: nginx
     spec:
       containers:
-        - image: nginx
+        - image: nginx_1
           name: nginx
+          resources:
+            requests:
+                memory: "64Mi"
+                cpu: 1
+            limits:
+                memory: "128Mi"
+                cpu: "250m"
+
