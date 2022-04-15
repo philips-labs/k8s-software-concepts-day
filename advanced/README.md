@@ -13,7 +13,19 @@ git clone https://github.com/philips-labs/k8s-software-concepts-day.git
 cd k8s-software-concepts-day/advanced
 ./install-operator.sh
 source ./install-go.sh
-source ./install-registry.sh
+./install-registry.sh
+```
+
+![](../sandbox-url.png)
+
+1. To get your sandbox url click the url as shown in the picture.
+   1. First click the `+`
+   2. Then choose `Select port to view on Host 1`
+2. Now fill in the registry port number 31500
+3. Now copy the url from your webbrowser (e.g. `167772170-31500-host09nc.environments.katacoda.com` :warning: NOTE the 31500 port number in the URL.)
+
+```bash
+export REGISTRY=167772170-host09nc.environments.katacoda.com
 ```
 
 ### Excercises
@@ -26,8 +38,9 @@ You might have to squeeze a few bugs before being able to deploy.
 cd http-echo-operator
 make generate
 make manifests
-export IMG=$REGISTRY/http-echo-operator:v0.0.1
+export IMG=$REGISTRY/http-echo-operator:0.0.1
 make docker-build
+make docker-push
 make deploy
 kubectl get services,deployments,pods --namespace http-echo-operator-system
 ```
