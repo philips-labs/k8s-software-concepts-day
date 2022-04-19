@@ -26,6 +26,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/types"
+	"k8s.io/apimachinery/pkg/util/intstr"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	ctrllog "sigs.k8s.io/controller-runtime/pkg/log"
@@ -55,7 +56,6 @@ type HttpEchoReconciler struct {
 func (r *HttpEchoReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	log := ctrllog.FromContext(ctx)
 
-	// Fetch the Memcached instance
 	httpEcho := &httpv1alpha1.HttpEcho{}
 	err := r.Get(ctx, req.NamespacedName, httpEcho)
 	if err != nil {
@@ -63,11 +63,11 @@ func (r *HttpEchoReconciler) Reconcile(ctx context.Context, req ctrl.Request) (c
 			// Request object not found, could have been deleted after reconcile request.
 			// Owned objects are automatically garbage collected. For additional cleanup logic use finalizers.
 			// Return and don't requeue
-			log.Info("Memcached resource not found. Ignoring since object must be deleted")
+			log.Info("HttpEcho resource not found. Ignoring since object must be deleted")
 			return ctrl.Result{}, nil
 		}
 		// Error reading the object - requeue the request.
-		log.Error(err, "Failed to get Memcached")
+		log.Error(err, "Failed to get HttpEcho")
 		return ctrl.Result{}, err
 	}
 
@@ -77,10 +77,17 @@ func (r *HttpEchoReconciler) Reconcile(ctx context.Context, req ctrl.Request) (c
 	if err != nil && errors.IsNotFound(err) {
 		// Define a new deployment
 		dep := r.deploymentForHttpEcho(httpEcho)
+		svc := r.serviceForHttpEcho(httpEcho)
 		log.Info("Creating a new Deployment", "Deployment.Namespace", dep.Namespace, "Deployment.Name", dep.Name)
 		err = r.Create(ctx, dep)
 		if err != nil {
 			log.Error(err, "Failed to create new Deployment", "Deployment.Namespace", dep.Namespace, "Deployment.Name", dep.Name)
+			return ctrl.Result{}, err
+		}
+		log.Info("Creating a new Service", "Service.Namespace", svc.Namespace, "Service.Name", svc.Name)
+		err = r.Create(ctx, svc)
+		if err != nil {
+			log.Error(err, "Failed to create new Service", "Service.Namespace", svc.Namespace, "Service.Name", svc.Name)
 			return ctrl.Result{}, err
 		}
 		// Deployment created successfully - return and requeue
@@ -105,7 +112,7 @@ func (r *HttpEchoReconciler) Reconcile(ctx context.Context, req ctrl.Request) (c
 		return ctrl.Result{RequeueAfter: time.Minute}, nil
 	}
 
-	// Update the Memcached status with the pod names
+	// Update the HttpEcho status with the pod names
 	// List the pods for this HttpEcho's deployment
 	podList := &corev1.PodList{}
 	listOpts := []client.ListOption{
@@ -154,7 +161,29 @@ func labelsForHttpEcho(name string) map[string]string {
 	return map[string]string{"app": "http-echo", "http-echo_cr": name}
 }
 
-// deploymentForMemcached returns a HttpEcho Deployment object
+// serviceForHttpEcho returns a HttpEcho Deployment object
+func (r *HttpEchoReconciler) serviceForHttpEcho(m *httpv1alpha1.HttpEcho) *corev1.Service {
+	ls := labelsForHttpEcho(m.Name)
+
+	svc := &corev1.Service{
+		ObjectMeta: metav1.ObjectMeta{
+			Name:      m.Name,
+			Namespace: m.Namespace,
+		},
+		Spec: corev1.ServiceSpec{
+			Type:     corev1.ServiceTypeNodePort,
+			Selector: ls,
+			Ports: []corev1.ServicePort{
+				{Name: "http", Port: 8080, Protocol: corev1.ProtocolTCP, TargetPort: intstr.FromString("http-echo")},
+			},
+		},
+	}
+
+	ctrl.SetControllerReference(m, svc, r.Scheme)
+	return svc
+}
+
+// deploymentForHttpEcho returns a HttpEcho Deployment object
 func (r *HttpEchoReconciler) deploymentForHttpEcho(m *httpv1alpha1.HttpEcho) *appsv1.Deployment {
 	ls := labelsForHttpEcho(m.Name)
 	replicas := m.Spec.Size
@@ -187,7 +216,7 @@ func (r *HttpEchoReconciler) deploymentForHttpEcho(m *httpv1alpha1.HttpEcho) *ap
 			},
 		},
 	}
-	// Set Memcached instance as the owner and controller
+
 	ctrl.SetControllerReference(m, dep, r.Scheme)
 	return dep
 }
