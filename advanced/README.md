@@ -11,12 +11,10 @@ To follow this exercise use following oreilly sandbox.
 ```bash
 git clone https://github.com/philips-labs/k8s-software-concepts-day.git
 cd k8s-software-concepts-day/advanced
-./install-operator.sh
-source ./install-go.sh
-./install-registry.sh
+source ./bootstrap-sandbox.sh
 ```
 
-![](../sandbox-url.png)
+![Get the Sandbox URL](../sandbox-url.png)
 
 1. To get your sandbox url click the url as shown in the picture.
    1. First click the `+`
@@ -25,7 +23,7 @@ source ./install-go.sh
 3. Now copy the url from your webbrowser (e.g. `167772170-31500-host09nc.environments.katacoda.com` :warning: NOTE the 31500 port number in the URL.)
 
 ```bash
-export REGISTRY=167772170-host09nc.environments.katacoda.com
+export REGISTRY=167772170-31500-host09nc.environments.katacoda.com
 ```
 
 ### Excercises
