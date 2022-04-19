@@ -4,8 +4,6 @@ metadata:
   name: nginx-service
 spec:
   type: NodePort
-  # Uncomment the below line to create a Headless Service
-  # clusterIP: None
   selector:
     app: nginx
   ports:
