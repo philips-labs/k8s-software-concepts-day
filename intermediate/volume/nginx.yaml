@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: app
+  name: app
+spec:
+  containers:
+  - image: nginx
+    name: app
+    volumeMounts:
+      - mountPath: "/data/app/config"
+        name: configpvc
+    resources: {}
+  volumes:
+    - name: configpvc
+      persistentVolumeClaim:
+        claimName: pvc
+  dnsPolicy: ClusterFirst
+  restartPolicy: Never
+status: {}
