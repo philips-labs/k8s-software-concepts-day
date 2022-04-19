@@ -1,11 +1,41 @@
 # Intermediate exercise
 
-1. Deploy the nginx and redis deployment from the given yamls in this folder.
-2. Check the running pods in the cluster with detailed information.
-3. Commit the output of your results in the repository.
-4. Change the nginx deployment to run with 2 replicas.
-5. Expose the nginx service on port 80.
-6. Check the service balances on top of the 2 replicas.
-7. Run a busybox container on the cluster.
-8. Perform a nslookup to find the DNS name for the nginx service
-9. Do a wget to call the service.
+This exercise has two parts:-
+    1. Define and Mount a Persistent Volume
+    2. Sidecar Containers
+
+To follow this exercise use following oreilly sandbox.
+
+- [Kubernetes sandbox](https://learning.oreilly.com/scenarios/kubernetes-sandbox/9781492062820/)
+
+## Define and Mount a Persistent Volume
+## Bootstrap sandbox
+
+```bash
+git clone https://github.com/philips-labs/k8s-software-concepts-day.git
+cd k8s-software-concepts-day/intermediate/volume
+```
+### Excercises
+
+#### 1. Create a Persistent Volume
+
+In this exercise, you will have to create a persistent volume.
+
+1. Deploy the PersistentVolume from the given yaml(pv.yaml) in this folder.
+2. Make sure volume status should be "Available" in the cluster.
+
+#### 2. Create a Persistent Volume Claim
+
+In this exercise we are creating a PersistentVolumeClaim that requests the PersistentVolume from the previous step.
+
+1. Deploy PersistentVolumeClaim from the given yaml(pvc.yaml) in this folder.
+2. Ensure that the PersistentVolumeClaim is properly bound after its creation. Fix the issues if not bound properly.
+
+#### 3. Mounting the Persistent Volume from a Pod
+
+In this exercise we are creating a new Pod that requests the PersistentVolume from the previous step.
+
+1. Deploy nginx pod from the given yaml(nginx.yaml) in this folder.
+2. Make sure PersistentVolume mount to the pod.
+3. This can be checked by kubectl describe pod <pod_name>
+4. Ensure pod should also be in "Running" State. Wait until the Pod enters the Running status and then check its events with the describe command.

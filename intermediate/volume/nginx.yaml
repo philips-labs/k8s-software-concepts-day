@@ -2,20 +2,20 @@ apiVersion: v1
 kind: Pod
 metadata:
   labels:
-    run: app
-  name: app
+    run: research
+  name: research
 spec:
   containers:
   - image: nginx
-    name: app
+    name: research
     volumeMounts:
       - mountPath: "/data/app/config"
         name: configpvc
     resources: {}
   volumes:
-    - name: configpvc
+    - name: configpv
       persistentVolumeClaim:
-        claimName: pvc
+        claimName: researchpvc
   dnsPolicy: ClusterFirst
   restartPolicy: Never
 status: {}
