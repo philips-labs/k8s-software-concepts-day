@@ -54,7 +54,7 @@ kubectl get services,deployments,pods --namespace http-echo-operator-system
 #### 3. Modify the operator to be able to modify the response
 
 - Introduce new parameter for the CRD
-- Build and deploy a new version of your operator (`v0.0.2`).
+- Build and deploy a new version of your operator (`0.0.2`).
 - Deploy `config/samples/http_v1alpha1_httpecho.yaml` using a new response message saying `Hi from Team X`.
 - Make a http call to the deployed service. What does it respond with?
 - Deploy `config/samples/http_v1alpha1_httpecho.yaml` using a new response message saying `Team X has achieved awesomeness`.
