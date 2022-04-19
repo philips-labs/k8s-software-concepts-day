@@ -174,7 +174,7 @@ func (r *HttpEchoReconciler) serviceForHttpEcho(m *httpv1alpha1.HttpEcho) *corev
 			Type:     corev1.ServiceTypeNodePort,
 			Selector: ls,
 			Ports: []corev1.ServicePort{
-				{Name: "http", Port: 8080, Protocol: corev1.ProtocolTCP, TargetPort: intstr.FromString("http-echo")},
+				{Name: "http", Port: 8080, NodePort: 30080, Protocol: corev1.ProtocolTCP, TargetPort: intstr.FromString("http-echo")},
 			},
 		},
 	}
