@@ -15,11 +15,11 @@ cd k8s-software-concepts-day/beginner
 
 #### 1. Deploy NGINX deployment
 
-In this exercise, you will have to fix the CPU & Memory request & limit.
+In this exercise, you will have to fix the CPU/Memory request & limit.
 
 1. Deploy the nginx deployment from the given yaml in this folder.
-2. Fix the resources.
-3. Make sure pod status should be "Ready" in the cluster.
+2. Fix the deployment issues.
+3. Make sure pod status should be "Running" in the cluster.
 
 
 #### 2. Deploy NGINX service
