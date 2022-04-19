@@ -1,5 +1,6 @@
 # Beginner exercise
-## nginx Deployment
+
+## Nginx Deployment
 
 To follow this exercise use following oreilly sandbox.
 
@@ -13,7 +14,7 @@ cd k8s-software-concepts-day/beginner
 ```
 ### Excercises
 
-#### 1. Deploy NGINX deployment
+#### 1. Deploy Nginx deployment
 
 In this exercise, you will have to fix the CPU/Memory request & limit.
 
@@ -22,10 +23,9 @@ In this exercise, you will have to fix the CPU/Memory request & limit.
 3. Make sure pod status should be "Running" in the cluster.
 
 
-#### 2. Deploy NGINX service
+#### 2. Deploy Nginx service
 
 In this exercise we are exposing application via service. We should be able to access application via service
-
 
 1. Deploy nginx service
 2. curl request to the service
