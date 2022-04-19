@@ -175,9 +175,9 @@ func (r *HttpEchoReconciler) deploymentForHttpEcho(m *httpv1alpha1.HttpEcho) *ap
 				},
 				Spec: corev1.PodSpec{
 					Containers: []corev1.Container{{
-						Image:   "hashicorp/http-echo:alpine",
-						Name:    "http-echo",
-						Command: []string{"-text", "hello software concepts"},
+						Image: "hashicorp/http-echo:alpine",
+						Name:  "http-echo",
+						Args:  []string{"-text", "hello software concepts"},
 						Ports: []corev1.ContainerPort{{
 							ContainerPort: 5678,
 							Name:          "http-echo",
