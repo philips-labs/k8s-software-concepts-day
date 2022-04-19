@@ -29,7 +29,7 @@ In this exercise, you will have to create a persistent volume.
 In this exercise we are creating a PersistentVolumeClaim that requests the PersistentVolume from the previous step.
 
 1. Deploy PersistentVolumeClaim from the given yaml(pvc.yaml) in this folder.
-2. Ensure that the PersistentVolumeClaim is properly bound after its creation. Fix the issues if not bound properly.
+2. Ensure that the PersistentVolumeClaim is properly bound(Status should be Bound) after its creation. Fix the issues if not bound properly.
 
 #### 3. Mounting the Persistent Volume from a Pod
 
