@@ -28,14 +28,12 @@ type HttpEchoSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	// Foo is an example field of HttpEcho. Edit httpecho_types.go to remove/update
+	// Size allows to configure the amount of replicas for HttpEcho.
 	Size int32 `json:"size"`
 }
 
 // HttpEchoStatus defines the observed state of HttpEcho
 type HttpEchoStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
 	Nodes []string `json:"nodes"`
 }
 
