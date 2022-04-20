@@ -57,7 +57,7 @@ In this exercise we are creating a new Pod that requests the PersistentVolume fr
 
 ## Deploy a pod with a sidecar container
 
-Navigate to the volume directory:
+Navigate to the sidecar directory:
 
 ```bash
 cd ../sidecar
