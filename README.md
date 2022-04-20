@@ -7,4 +7,3 @@ This repository contains some Kubernetes exercises for the Software Concepts Col
 - [beginner](beginner/README.md)
 - [intermediate](intermediate/README.md)
 - [advanced](./advanced/README.md)
-This repository contains some Kubernetes exercises for the Software Concepts Collaboration Day.
